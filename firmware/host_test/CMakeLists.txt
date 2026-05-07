@@ -12,5 +12,24 @@ endif()
 
 add_compile_options(-Wall -Wextra -Wpedantic)
 
-add_executable(test_placeholder test_placeholder.c)
-add_test(NAME placeholder COMMAND test_placeholder)
+include(FetchContent)
+FetchContent_Declare(
+    unity
+    GIT_REPOSITORY https://github.com/ThrowTheSwitch/Unity.git
+    GIT_TAG        v2.6.0
+    GIT_SHALLOW    TRUE
+)
+FetchContent_MakeAvailable(unity)
+
+set(COMPONENTS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../components)
+
+add_library(state_machine STATIC
+    ${COMPONENTS_DIR}/state_machine/state_machine.c
+)
+target_include_directories(state_machine PUBLIC
+    ${COMPONENTS_DIR}/state_machine/include
+)
+
+add_executable(test_state_machine test_state_machine.c)
+target_link_libraries(test_state_machine PRIVATE state_machine unity)
+add_test(NAME state_machine COMMAND test_state_machine)
