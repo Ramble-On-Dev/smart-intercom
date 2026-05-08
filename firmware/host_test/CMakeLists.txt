@@ -125,3 +125,14 @@ target_include_directories(mjpeg_rtp PUBLIC
 add_executable(test_mjpeg_rtp test_mjpeg_rtp.c)
 target_link_libraries(test_mjpeg_rtp PRIVATE mjpeg_rtp unity)
 add_test(NAME mjpeg_rtp COMMAND test_mjpeg_rtp)
+
+add_library(jpeg_synth STATIC
+    ${COMPONENTS_DIR}/jpeg_synth/jpeg_synth.c
+)
+target_include_directories(jpeg_synth PUBLIC
+    ${COMPONENTS_DIR}/jpeg_synth/include
+)
+
+add_executable(test_jpeg_synth test_jpeg_synth.c)
+target_link_libraries(test_jpeg_synth PRIVATE jpeg_synth unity)
+add_test(NAME jpeg_synth COMMAND test_jpeg_synth)
