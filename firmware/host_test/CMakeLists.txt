@@ -23,6 +23,8 @@ FetchContent_MakeAvailable(unity)
 
 set(COMPONENTS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../components)
 
+find_package(Threads REQUIRED)
+
 add_library(state_machine STATIC
     ${COMPONENTS_DIR}/state_machine/state_machine.c
 )
@@ -30,6 +32,18 @@ target_include_directories(state_machine PUBLIC
     ${COMPONENTS_DIR}/state_machine/include
 )
 
+add_library(event_queue STATIC
+    ${COMPONENTS_DIR}/event_queue/host/event_queue_host.c
+)
+target_include_directories(event_queue PUBLIC
+    ${COMPONENTS_DIR}/event_queue/include
+)
+target_link_libraries(event_queue PUBLIC state_machine Threads::Threads)
+
 add_executable(test_state_machine test_state_machine.c)
 target_link_libraries(test_state_machine PRIVATE state_machine unity)
 add_test(NAME state_machine COMMAND test_state_machine)
+
+add_executable(test_event_queue test_event_queue.c)
+target_link_libraries(test_event_queue PRIVATE event_queue unity)
+add_test(NAME event_queue COMMAND test_event_queue)
