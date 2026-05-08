@@ -103,3 +103,14 @@ add_test(NAME rtsp_request COMMAND test_rtsp_request)
 add_executable(test_rtsp_response test_rtsp_response.c)
 target_link_libraries(test_rtsp_response PRIVATE rtsp_proto unity)
 add_test(NAME rtsp_response COMMAND test_rtsp_response)
+
+add_library(rtp_parser STATIC
+    ${COMPONENTS_DIR}/rtp_parser/rtp_parser.c
+)
+target_include_directories(rtp_parser PUBLIC
+    ${COMPONENTS_DIR}/rtp_parser/include
+)
+
+add_executable(test_rtp_parser test_rtp_parser.c)
+target_link_libraries(test_rtp_parser PRIVATE rtp_parser unity)
+add_test(NAME rtp_parser COMMAND test_rtp_parser)
