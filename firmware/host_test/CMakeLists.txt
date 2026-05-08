@@ -47,3 +47,14 @@ add_test(NAME state_machine COMMAND test_state_machine)
 add_executable(test_event_queue test_event_queue.c)
 target_link_libraries(test_event_queue PRIVATE event_queue unity)
 add_test(NAME event_queue COMMAND test_event_queue)
+
+add_library(config STATIC
+    ${COMPONENTS_DIR}/config/host/config_host.c
+)
+target_include_directories(config PUBLIC
+    ${COMPONENTS_DIR}/config/include
+)
+
+add_executable(test_config test_config.c)
+target_link_libraries(test_config PRIVATE config unity)
+add_test(NAME config COMMAND test_config)
