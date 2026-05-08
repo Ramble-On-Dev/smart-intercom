@@ -58,3 +58,15 @@ target_include_directories(config PUBLIC
 add_executable(test_config test_config.c)
 target_link_libraries(test_config PRIVATE config unity)
 add_test(NAME config COMMAND test_config)
+
+add_library(tone_detect STATIC
+    ${COMPONENTS_DIR}/tone_detect/tone_detect.c
+)
+target_include_directories(tone_detect PUBLIC
+    ${COMPONENTS_DIR}/tone_detect/include
+)
+target_link_libraries(tone_detect PUBLIC m)
+
+add_executable(test_tone_detect test_tone_detect.c)
+target_link_libraries(test_tone_detect PRIVATE tone_detect unity m)
+add_test(NAME tone_detect COMMAND test_tone_detect)
