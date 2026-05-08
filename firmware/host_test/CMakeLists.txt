@@ -114,3 +114,14 @@ target_include_directories(rtp_parser PUBLIC
 add_executable(test_rtp_parser test_rtp_parser.c)
 target_link_libraries(test_rtp_parser PRIVATE rtp_parser unity)
 add_test(NAME rtp_parser COMMAND test_rtp_parser)
+
+add_library(mjpeg_rtp STATIC
+    ${COMPONENTS_DIR}/mjpeg_rtp/mjpeg_rtp.c
+)
+target_include_directories(mjpeg_rtp PUBLIC
+    ${COMPONENTS_DIR}/mjpeg_rtp/include
+)
+
+add_executable(test_mjpeg_rtp test_mjpeg_rtp.c)
+target_link_libraries(test_mjpeg_rtp PRIVATE mjpeg_rtp unity)
+add_test(NAME mjpeg_rtp COMMAND test_mjpeg_rtp)
