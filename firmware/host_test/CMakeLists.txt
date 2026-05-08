@@ -82,3 +82,19 @@ target_link_libraries(dispatcher PUBLIC state_machine event_queue tone_detect)
 add_executable(test_dispatcher test_dispatcher.c)
 target_link_libraries(test_dispatcher PRIVATE dispatcher unity m)
 add_test(NAME dispatcher COMMAND test_dispatcher)
+
+add_library(rtsp_proto STATIC
+    ${COMPONENTS_DIR}/rtsp_proto/rtsp_url.c
+    ${COMPONENTS_DIR}/rtsp_proto/rtsp_request.c
+)
+target_include_directories(rtsp_proto PUBLIC
+    ${COMPONENTS_DIR}/rtsp_proto/include
+)
+
+add_executable(test_rtsp_url test_rtsp_url.c)
+target_link_libraries(test_rtsp_url PRIVATE rtsp_proto unity)
+add_test(NAME rtsp_url COMMAND test_rtsp_url)
+
+add_executable(test_rtsp_request test_rtsp_request.c)
+target_link_libraries(test_rtsp_request PRIVATE rtsp_proto unity)
+add_test(NAME rtsp_request COMMAND test_rtsp_request)
