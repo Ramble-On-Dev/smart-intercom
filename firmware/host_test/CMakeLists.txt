@@ -70,3 +70,15 @@ target_link_libraries(tone_detect PUBLIC m)
 add_executable(test_tone_detect test_tone_detect.c)
 target_link_libraries(test_tone_detect PRIVATE tone_detect unity m)
 add_test(NAME tone_detect COMMAND test_tone_detect)
+
+add_library(dispatcher STATIC
+    ${COMPONENTS_DIR}/dispatcher/dispatcher.c
+)
+target_include_directories(dispatcher PUBLIC
+    ${COMPONENTS_DIR}/dispatcher/include
+)
+target_link_libraries(dispatcher PUBLIC state_machine event_queue tone_detect)
+
+add_executable(test_dispatcher test_dispatcher.c)
+target_link_libraries(test_dispatcher PRIVATE dispatcher unity m)
+add_test(NAME dispatcher COMMAND test_dispatcher)
